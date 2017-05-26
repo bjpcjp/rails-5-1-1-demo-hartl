@@ -6,22 +6,29 @@ end
 
 class GoControllerTest < ActionDispatch::IntegrationTest
   test "should get home" do
-    get go_home_url
+    get root_path # listing 5.28
     assert_response :success
     assert_select "title", "Demo | Home"
   end
 
   test "should get help" do
-    get go_help_url
+    get help_path # listing 5.28
     assert_response :success
     assert_select "title", "Demo | Help"
   end
 
   # listing 3.15
   test "should get about" do
-  	get go_about_url
+  	get about_path # listing 5.28
   	assert_response :success
     assert_select "title", "Demo | About"
+  end
+
+  # listing 5.21
+  test "should get contact" do
+    get contact_path # listing 5.28
+    assert_response :success
+    assert_select "title", "Demo | Contact"
   end
 
 end
