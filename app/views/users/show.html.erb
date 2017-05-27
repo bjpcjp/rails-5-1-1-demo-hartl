@@ -1,0 +1,20 @@
+<!-- listing 7.4 -->
+<!--
+<%= @user.name %>, <%= @user.email %> -->
+
+<!-- listing 7.8 
+gravatar documentation: http://en.gravatar.com/site/implement/hash/
+-->
+
+<!-- listing 7.10 -->
+<% provide(:title, @user.name) %>
+<div class="row">
+  <aside class="col-md-4">
+    <section class="user_info">
+      <h1>
+        <%= gravatar_for @user %>
+        <%= @user.name %>
+      </h1>
+    </section>
+  </aside>
+</div>

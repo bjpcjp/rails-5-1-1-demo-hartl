@@ -21,4 +21,7 @@ Rails.application.routes.draw do
   # listing 5.43
   get '/signup',	to: 'users#new'
   
+  # listing 7.3
+  resources :users
+  
 end
