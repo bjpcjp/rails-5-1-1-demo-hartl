@@ -6,7 +6,10 @@ git_source(:github) do |repo_name|
 end
 
 
-gem 'rails', '~> 5.1.1'
+gem 'rails', '~> 5.1.1' # may need to backtrack to 5.0.1 to sync w/ Hartl tutorial.
+
+gem 'jquery-rails'
+
 gem 'bootstrap-sass', '3.3.6' # listing 5.5
 gem 'puma', '~> 3.7'
 gem 'sass-rails', '~> 5.0'

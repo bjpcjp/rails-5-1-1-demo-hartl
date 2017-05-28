@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   
+  get 'sessions/new'
+
   get 'users/new'
 
   #get 'go/home'
@@ -24,4 +26,9 @@ Rails.application.routes.draw do
   # listing 7.3
   resources :users
   
+  # listing 8.2
+  get '/login',   to: 'sessions#new'
+  post '/login',   to: 'sessions#create'
+  delete '/logout',  to: 'sessions#destroy'
+
 end

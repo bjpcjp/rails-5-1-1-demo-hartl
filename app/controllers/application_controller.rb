@@ -1,8 +1,10 @@
 class ApplicationController < ActionController::Base
+
   protect_from_forgery with: :exception
 
-  # listing 3.4
-  def hello
+  include SessionsHelper # listing 8.13
+
+  def hello # listing 3.4
   	render html: 'hello world'
   end
 
