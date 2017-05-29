@@ -18,9 +18,15 @@ class User < ApplicationRecord
 		uniqueness: { case_sensitive: false } 		# listing 6.25, 6.27
 
 	has_secure_password
+
   	validates :password, 							# listing 6.42
   		presence: true, 
-  		length: { minimum: 6 }
+  		length: { minimum: 6 },
+=begin 
+we need an exception to password validation if password=empty. 
+We can do this by passing the allow_nil: true option to validates.
+=end
+  		allow_nil: true								# listing 10.13
 
   	# return hash digest of given string.
   	# listing 8.21

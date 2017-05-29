@@ -10,6 +10,15 @@ module SessionsHelper
   	cookies.permanent[:remember_token] = user.remember_token
   end
 
+=begin 
+Adopt a common convention and define boolean method to use in correct_user before filter.
+(define in the Sessions helper)
+=end
+
+  def current_user?(user) # listing 10.27
+    user == current_user
+  end
+
   def current_user # listing 8.16
   	# listing 9.9
     if (user_id = session[:user_id])
@@ -39,5 +48,24 @@ module SessionsHelper
   	session.delete(:user_id)
   	@current_user = nil
   end
-  
+
+=begin 
+* use case: friendly forwarding
+* we need to store the location of requested page, 
+then redirect to that location instead of to the default. 
+=end
+
+  # Redirects to stored location (or to the default).
+  # listing 10.30
+  def redirect_back_or(default)
+    redirect_to(session[:forwarding_url] || default)
+    session.delete(:forwarding_url)
+  end
+
+  # Stores the URL trying to be accessed.
+  # listing 10.30
+  def store_location
+    session[:forwarding_url] = request.original_url if request.get?
+  end
+
 end

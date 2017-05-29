@@ -11,7 +11,8 @@ class SessionsController < ApplicationController
     	#remember user								# listing 9.7
     	params[:session][:remember_me] == '1' ?		# listing 9.23
     	remember(user) : forget(user)
-    	redirect_to user 
+    	#redirect_to user 
+    	redirect_back_or user 						# listing 10.32
     else
     												# listing 8.8
       	flash.now[:danger] = 'Invalid email/password combination' # Not quite right!
