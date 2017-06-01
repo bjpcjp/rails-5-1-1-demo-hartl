@@ -26,7 +26,9 @@ Adopt a common convention and define boolean method to use in correct_user befor
     elsif (user_id = cookies.signed[:user_id])
       #raise # listing 9.29; removed in 9.33.
       user = User.find_by(id: user_id)
-      if user && user.authenticated?(cookies[:remember_token])
+      # listing 11.28 
+      #if user && user.authenticated?(cookies[:remember_token])
+      if user && user.authenticated?(:remember, cookies[:remember_token])
         log_in user
         @current_user = user
       end

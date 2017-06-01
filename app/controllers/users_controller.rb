@@ -22,13 +22,16 @@ class UsersController < ApplicationController
   	@user = User.find(params[:id])
   	#debugger                         # listing 7.6
   end
-  
-  def create                          # listing 7.18
-  	@user = User.new(user_params)     # listing 7.19
+
+  # listing 7.18, 7.19, 7.28, 7.29, 8.25, 11.23, 11.36
+  def create                          
+  	@user = User.new(user_params)     
   	if @user.save
-      log_in @user                    # listing 8.25
-  		flash[:success] = "Welcome!"    # listing 7.29
-  		redirect_to @user               # listing 7.28
+      #UserMailer.account_activation(@user).deliver_now
+      @user.send_activation_email
+      flash[:info] = "Done! Please check your email for an activation link."
+      redirect_to root_url
+      
   	else
   		render 'new'
   	end
