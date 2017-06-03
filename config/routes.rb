@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
   
   get 'sessions/new'
-
   get 'users/new'
 
   #get 'go/home'
@@ -33,4 +32,7 @@ Rails.application.routes.draw do
 
   # listing 11.1
   resources :account_activations, only: [:edit]
+
+  # listing 12.1
+  resources :password_resets, only: [:new, :create, :edit, :update]
 end

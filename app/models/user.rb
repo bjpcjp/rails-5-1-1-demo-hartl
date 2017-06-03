@@ -1,13 +1,9 @@
 class User < ApplicationRecord
 
 	attr_accessor :remember_token 					        # listing 9.3
-
-=begin 
-* activation links sent via email & "clicked" via browser (GET, not PATCH).
-* use public attribute (virtual) with secure hash design (stored in DB).
-=end
-
   attr_accessor :activation_token                 # listing 11.3
+  attr_accessor :reset_token                      # listing 12.6
+
   before_save   :downcase_email                   # listing 6.32
   before_create :create_activation_digest         # listing 11.3
 
@@ -84,6 +80,20 @@ Use 'update_attribute' to bypass validation checks.
 
     def send_activation_email
       UserMailer.account_activation(self).deliver_now
+    end
+
+    def create_reset_digest # listing 12.6
+      self.reset_token = User.new_token
+      update_attribute(:reset_digest, User.digest(reset_token))
+      update_attribute(:reset_sent_at, Time.zone.now)
+    end
+
+    def send_password_reset_email # listing 12.6
+      UserMailer.password_reset(self).deliver_now
+    end
+
+    def password_reset_expired? # listing 12.17
+      reset_sent_at < 2.hours.ago
     end
 
   private
