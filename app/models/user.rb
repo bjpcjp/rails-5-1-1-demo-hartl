@@ -1,5 +1,7 @@
 class User < ApplicationRecord
 
+  #has_many :microposts                            # listing 13.11
+  has_many :microposts, dependent: :destroy       # listing 13.19
 	attr_accessor :remember_token 					        # listing 9.3
   attr_accessor :activation_token                 # listing 11.3
   attr_accessor :reset_token                      # listing 12.6
@@ -44,11 +46,9 @@ We can do this by passing the allow_nil: true option to validates.
   		SecureRandom.urlsafe_base64
   	end
 
-=begin
-We need User.remember_token	to be available (for cookie storage)
-without storing it in the DB.
-Use 'update_attribute' to bypass validation checks.
-=end
+    # We need User.remember_token	to be available (for cookie storage)
+    # without storing it in the DB.
+    # Use 'update_attribute' to bypass validation checks.
 
   	# listing 9.3
   	def remember
@@ -60,6 +60,7 @@ Use 'update_attribute' to bypass validation checks.
     # does account activation digest match the given token?
     # demos METAPROGRAMMING via 'send' method
     # "#{attribute}_digest" becomes "activation_digest"
+
     def authenticated?(attribute, token)
       digest = send("#{attribute}_digest")
       return false if digest.nil?
@@ -94,6 +95,13 @@ Use 'update_attribute' to bypass validation checks.
 
     def password_reset_expired? # listing 12.17
       reset_sent_at < 2.hours.ago
+    end
+
+    # "user_id = ?" ensures id is escaped before going to SQL query
+    # avoids SQL injection risk
+
+    def feed # defines proto-feed -- listing 13.46
+      Micropost.where("user_id = ?", id) # could easily be written as 'microposts'
     end
 
   private

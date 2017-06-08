@@ -5,7 +5,6 @@ class UsersController < ApplicationController
   before_action :logged_in_user, only: [:index, :edit, :update, :destroy] # listing 10.58
 
   before_action :correct_user,   only: [:edit, :update] # listing 10.25
-
   before_action :admin_user,     only: :destroy
 
 
@@ -18,9 +17,16 @@ class UsersController < ApplicationController
   	@user = User.new                  
   end
 
+# listing 13.23:
+# 'will_paginate' assumes existence of '@users' instance variable
+# when used in context of 'Users' controller.
+# in this case we want to paginate microposts -
+# so explicitly pass @microposts variable instead.
+#
   def show                            # listing 7.5
   	@user = User.find(params[:id])
   	#debugger                         # listing 7.6
+    @microposts = @user.microposts.paginate(page: params[:page])
   end
 
   # listing 7.18, 7.19, 7.28, 7.29, 8.25, 11.23, 11.36
@@ -65,17 +71,21 @@ class UsersController < ApplicationController
   	params.require(:user).permit(:name, :email, :password, :password_confirmation)
   end
 
-  def logged_in_user                  # listing 10.15
-    unless logged_in?
-      store_location                  # listing 10.31 - for friendly forwarding
-      flash[:danger] = "Please log in."
-      redirect_to login_url
-    end
-  end
+  # listing 13.33
+  # moved to application_controller (see listing 13.32)
 
+  #def logged_in_user                  # listing 10.15
+  #  unless logged_in?
+  #    store_location                  # listing 10.31 - for friendly forwarding
+  #    flash[:danger] = "Please log in."
+  #    redirect_to login_url
+  #  end
+  #end
+
+  # before filters
+  
   def correct_user                    # listing 10.25
     @user = User.find(params[:id])
-    #redirect_to(root_url) unless @user == current_user
     redirect_to(root_url) unless current_user?(@user)  # listing 10.28
   end
 

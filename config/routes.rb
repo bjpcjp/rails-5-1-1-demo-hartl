@@ -35,4 +35,9 @@ Rails.application.routes.draw do
 
   # listing 12.1
   resources :password_resets, only: [:new, :create, :edit, :update]
+
+  # listing 13.30
+  # microposts UI goes thru Profile & Home pages == no need for 'new','edit'
+  #
+  resources :microposts, only: [:create, :destroy]
 end

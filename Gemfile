@@ -30,6 +30,11 @@ gem 'faker', '1.6.6'
 gem 'will_paginate', '3.1.0'
 gem 'bootstrap-will_paginate', '0.0.10'
 
+# listing 13.58 - for image upload, image resize, image upload/production
+gem 'carrierwave', '1.1.0'
+gem 'mini_magick', '4.7.0'
+gem 'fog',         '1.40.0'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

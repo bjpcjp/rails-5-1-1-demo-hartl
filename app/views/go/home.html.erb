@@ -1,5 +1,30 @@
 <% provide(:page_title, "Home") %>
 
+<!--
+listing 13.37 - add microposts to home page
+-->
+
+<% if logged_in? %>
+  <div class="row">
+    <aside class="col-md-4">
+      <section class="user_info">
+        <%= render 'shared/user_info' %>
+      </section>
+      <section class="micropost_form">
+        <%= render 'shared/micropost_form' %>
+      </section>
+    </aside>
+
+    <!-- listing 13.49 -- adds status feed -->
+    <div class="col-md-8">
+      <h3>Micropost Feed</h3>
+      <%= render 'shared/feed' %>
+    </div>
+
+  </div>
+
+<% else %>
+
 <div class="center jumbotron">
   <h1>Welcome</h1>
 
@@ -15,3 +40,5 @@
 
 <%= link_to image_tag("rails.png", alt: "Rails logo"),
             'http://rubyonrails.org/' %>
+
+<% end %>
