@@ -1,4 +1,4 @@
 # README
 
 ### This is a placeholder for a README doc.
-* Completed thru Chapter 12.
+* Completed thru Chapter 13.
