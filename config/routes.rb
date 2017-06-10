@@ -23,8 +23,15 @@ Rails.application.routes.draw do
   get '/signup',	to: 'users#new'
   
   # listing 7.3
-  resources :users
+  #resources :users
   
+  # listing 14.15
+  resources :users do
+    member do
+      get :following, :followers
+    end
+  end
+
   # listing 8.2
   get '/login',   to: 'sessions#new'
   post '/login',   to: 'sessions#create'
@@ -40,4 +47,8 @@ Rails.application.routes.draw do
   # microposts UI goes thru Profile & Home pages == no need for 'new','edit'
   #
   resources :microposts, only: [:create, :destroy]
+
+  # listing 14.20
+  resources :relationships, only: [:create, :destroy]
+
 end

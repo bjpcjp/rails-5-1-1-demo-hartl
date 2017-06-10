@@ -97,4 +97,49 @@ class UserTest < ActiveSupport::TestCase
     end
   end
 
+  # listing 14.9
+  test "should follow and unfollow a user" do
+    michael = users(:michael)
+    archer  = users(:archer)
+
+    assert_not michael.following?(archer)
+
+    michael.follow(archer)
+    assert michael.following?(archer)
+
+    assert archer.followers.include?(michael) # listing 14.13
+
+    michael.unfollow(archer)
+    assert_not michael.following?(archer)
+  end
+
+=begin requirements:
+* posts for followed users should be in the feed.
+* posts for the user should be in the feed.
+* posts from unfollowed users should NOT be in the feed.  
+=end
+
+  # listing 14.42
+  test "feed should have the right posts" do
+    michael = users(:michael)
+    archer  = users(:archer)
+    lana    = users(:lana)
+
+    # Posts from followed user
+    lana.microposts.each do |post_following|
+      assert michael.feed.include?(post_following)
+    end
+
+    # Posts from self
+    michael.microposts.each do |post_self|
+      assert michael.feed.include?(post_self)
+    end
+
+    # Posts from unfollowed user
+    archer.microposts.each do |post_unfollowed|
+      assert_not michael.feed.include?(post_unfollowed)
+    end
+
+  end
+
 end

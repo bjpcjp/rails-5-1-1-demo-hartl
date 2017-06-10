@@ -1,21 +1,27 @@
 <% provide(:page_title, "Home") %>
 
-<!--
-listing 13.37 - add microposts to home page
--->
+<!-- listing 13.37: add microposts to home page -->
+<!-- listing 14.17: adds following/follower stats -->
+<!-- listing 13.49: adds status feed -->
 
 <% if logged_in? %>
   <div class="row">
     <aside class="col-md-4">
+
       <section class="user_info">
         <%= render 'shared/user_info' %>
       </section>
+
+      <section class="stats">
+        <%= render 'shared/stats' %>
+      </section>
+
       <section class="micropost_form">
         <%= render 'shared/micropost_form' %>
       </section>
+
     </aside>
 
-    <!-- listing 13.49 -- adds status feed -->
     <div class="col-md-8">
       <h3>Micropost Feed</h3>
       <%= render 'shared/feed' %>

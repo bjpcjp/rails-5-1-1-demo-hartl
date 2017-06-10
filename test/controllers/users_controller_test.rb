@@ -88,4 +88,15 @@ before_filter operates on per-action basis.
     assert_redirected_to root_url
   end
 
+  # listing 14.24: looks for authorization of following & followers pages.
+  test "should redirect following when not logged in" do
+    get following_user_path(@user)
+    assert_redirected_to login_url
+  end
+
+  test "should redirect followers when not logged in" do
+    get followers_user_path(@user)
+    assert_redirected_to login_url
+  end
+
 end
